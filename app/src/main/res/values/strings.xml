@@ -4,4 +4,20 @@
     <string name="title_dashboard">仪表盘</string>
     <string name="title_led">灯效控制</string>
     <string name="title_ssh">SSH</string>
+    <string name="log">TextViI/zygote: Do full code cache collection, code=125KB, data=84KB
+I/zygote: After code cache collection, code=125KB, data=68KB
+I/zygote: Do partial code cache collection, code=126KB, data=73KB
+I/zygote: After code cache collection, code=126KB, data=73KB
+          Increasing code cache capacity to 512KB
+W/Adreno-EGL: : EGL_BAD_ATTRIBUTE
+D/vndksupport: Loading /vendor/lib/hw/gralloc.msm8974.so from current namespace instead of sphal namespace.
+I/RenderThread: type=1400 audit(0.0:3743): avc: denied { ioctl } for path
+        TextViI/zygote: Do full code cache collection, code=125KB, data=84KB
+I/zygote: After code cache collection, code=125KB, data=68KB
+I/zygote: Do partial code cache collection, code=126KB, data=73KB
+I/zygote: After code cache collection, code=126KB, data=73KB
+          Increasing code cache capacity to 512KB
+W/Adreno-EGL: : EGL_BAD_ATTRIBUTE
+D/vndksupport: Loading /vendor/lib/hw/gralloc.msm8974.so from current namespace instead of sphal namespace.
+I/RenderThread: type=1400 audit(0.0:3743): avc: denied { ioctl } for path==</string>
 </resources>
