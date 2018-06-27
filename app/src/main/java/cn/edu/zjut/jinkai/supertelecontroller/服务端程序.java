@@ -1,19 +1,28 @@
 package cn.edu.zjut.jinkai.supertelecontroller;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.PrintWriter;
+import java.net.InetAddress;
+import java.net.Socket;
+import java.io.OutputStreamWriter;
+import java.net.ServerSocket;
+import java.net.URL;
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.StringTokenizer;
 
 /**
  * 取得linux系统下的cpu、内存信息
  *
- * <p>@author javer QQ:84831612</p>
- * @date 2005
+ *
  */
-public final class LinuxSystemTool
+final class LinuxSystemTool
 {
     /**
      * get memory by used info
@@ -85,5 +94,64 @@ public final class LinuxSystemTool
         int idle2 = Integer.parseInt(token.nextToken());
 
         return (float)((user2 + sys2 + nice2) - (user1 + sys1 + nice1)) / (float)((user2 + nice2 + sys2 + idle2) - (user1 + nice1 + sys1 + idle1));
+    }
+}
+class HServerApp implements Runnable {
+    public int port;
+
+    public HServerApp(int port) {
+        this.port = port;
+    }
+
+    @Override
+    public void run() {
+        try {
+            ServerSocket server = new ServerSocket(port);
+            while (true) {
+                //等待client的请求
+                System.out.println("waiting...");
+                Socket socket = server.accept();
+                // 接收客户端的数据
+                //while(socket!=null){
+                while(socket!=null){
+
+                    DataInputStream in = new DataInputStream(socket.getInputStream());
+                    String string = in.readUTF();
+                    System.out.println("client:" + string);
+                    Thread.sleep(50);
+
+//}
+                    // 发送给客户端数据
+                    int[] memInfo = LinuxSystemTool.getMemInfo();
+                    //System.out.println("MemTotal：" + memInfo[0]);
+                    System.out.println("MemFree：" + memInfo[1]);
+                    //System.out.println("SwapTotal：" + memInfo[2]);
+                    //System.out.println("SwapFree：" + memInfo[3]);
+                    //System.out.println("CPU利用率：" + LinuxSystemTool.getCpuInfo());
+                    //while(true)
+                    //{
+                    DataOutputStream out = new DataOutputStream(socket.getOutputStream());
+                    out.writeUTF(LinuxSystemTool.getMemInfo()[1]+"");
+                    out.writeUTF(LinuxSystemTool.getCpuInfo()+"");
+                    out.writeUTF(LinuxSystemTool.getMemInfo()[3]+"");
+                    out.writeUTF(LinuxSystemTool.getMemInfo()[0]+"");
+
+                    //out.close();
+                    //Thread.sleep(5000);
+
+                }
+            }
+            //socket.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }catch (InterruptedException e){
+            e.printStackTrace();
+        }
+    }
+
+    public static void main(String[] args) {
+        HServerApp serverApp = new HServerApp(9050);
+        serverApp.run();
     }
 }

@@ -1,3 +1,14 @@
+/**
+*
+*作者：黄金凯
+*
+*单位：浙江工业大学
+*
+*版本：1.3
+*
+*本项目已上传至github：https://github.com/ProphetHJK/SuperTelecontroller
+* */
+
 package cn.edu.zjut.jinkai.supertelecontroller;
 
 import android.annotation.SuppressLint;
